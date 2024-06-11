@@ -1,0 +1,16 @@
+[
+    {
+        "id": 1,
+        "name": "First User",
+        "email": "user1@mail.com",
+        "password": "duarnmax",
+        "proUser": true
+    },
+    {
+        "id": 2,
+        "name": "Second User",
+        "email": "user2@mail.com",
+        "password": "duarnmax",
+        "proUser": false
+    }
+]

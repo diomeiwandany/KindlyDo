@@ -76,19 +76,6 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
     },
-    proUser: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: false,
-      validate: {
-        notNull: {
-          msg: "Field proUser must be filled (Null)"
-        },
-        notEmpty: {
-          msg: "Field proUser must be filled (Empty)"
-        },
-      },
-    },
   }, {
     sequelize,
     modelName: 'Task',
