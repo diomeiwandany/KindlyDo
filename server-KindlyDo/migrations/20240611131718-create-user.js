@@ -17,10 +17,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      password: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
+      // password: {
+      //   type: Sequelize.STRING,
+      //   allowNull: false,
+      // },
       proUser: {
         type: Sequelize.BOOLEAN,
         defaultValue: false,
