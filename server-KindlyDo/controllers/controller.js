@@ -1,6 +1,45 @@
-const { Task } = require('../models');
+const { where } = require('sequelize');
+const { Task, User } = require('../models');
+const { OAuth2Client } = require('google-auth-library');
+const { signToken } = require('../helpers/jwt');
+const client = new OAuth2Client();
 
 class Controller {
+    static async loginByGoogle(req, res, next) {
+        try {
+            const ticket = await client.verifyIdToken({
+                idToken: req.headers.google_token,
+                audience: process.env.GOOGLE_CLIENTID,
+            });
+            // console.log(ticket);
+            // console.log(ticket.getPayload());
+            const payload = ticket.getPayload();
+            // console.log(payload);
+            const [user] = await User.findOrCreate({
+                where: {
+                    email: payload.email,
+                },
+                defaults: {
+                    name: payload.name,
+                    email: payload.email,
+                }
+            });
+            console.log(user);
+            const token = signToken({
+                id: user.dataValues.id,
+            });
+            // console.log(user[0].dataValues.id);
+
+            return res.status(201).json({
+                access_token: token,
+            });
+            // res.send('LOGIN VIA GOOGLE JALAN GAES');
+        } catch (error) {
+            console.log(error);
+            next(error);
+        }
+    }
+
     static async taskList(req, res, next) {
         try {
             const data = await Task.findAll();
@@ -69,7 +108,7 @@ class Controller {
             });
             res.status(200).json({
                 message: `Task with id ${data.id} - ${data.name} has been updated`,
-            })
+            });
         } catch (error) {
             console.log(error);
             next(error);
@@ -79,13 +118,20 @@ class Controller {
     static async taskDelete(req, res, next) {
         try {
             const data = await Task.findByPk(req.params.id);
+
             if (!data) {
                 throw { name: "NotFound" };
             };
-            await data.destroy();
+
+            if (data.status === "Done") {
+                await data.destroy();
+            } else {
+                throw { name: "NotDone" };
+            };
+
             return res.status(200).json({
                 message: `Task with id ${data.id} - ${data.name} has been deleted`,
-            })
+            });
         } catch (error) {
             next(error);
         }

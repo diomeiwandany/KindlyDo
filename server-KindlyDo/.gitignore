@@ -4,3 +4,4 @@ credentials.txt
 npx_scripts.txt
 openai.js
 midtrans.js
+.env
