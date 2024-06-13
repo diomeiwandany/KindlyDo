@@ -4,14 +4,14 @@
         "name": "Buy groceries",
         "description": "Buy at AlfaMei",
         "assignerId": 1,
-        "assigneeId": 2,
+        "assigneeId": 1,
         "status": "On progress"
     },
     {
         "id": 2,
         "name": "Buy electronics",
         "description": "Buy at Tokopaedi",
-        "assignerId": 2,
+        "assignerId": 1,
         "assigneeId": 1,
         "status": "On progress"
     }

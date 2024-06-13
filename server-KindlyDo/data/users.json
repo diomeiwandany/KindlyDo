@@ -1,14 +1,14 @@
 [
     {
         "id": 1,
-        "name": "First User",
-        "email": "user1@mail.com",
+        "name": "Dio Meiwandany",
+        "email": "diomeiwandany@gmail.com",
         "proUser": true
     },
     {
         "id": 2,
-        "name": "Second User",
-        "email": "user2@mail.com",
+        "name": "Dio Meiwandany",
+        "email": "d.meiwandany@gmail.com",
         "proUser": false
     }
 ]

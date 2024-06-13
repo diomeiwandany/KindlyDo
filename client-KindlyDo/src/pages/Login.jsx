@@ -21,10 +21,12 @@ export function Login() {
                 },
             });
 
-            localStorage.access_token = res.data.access_token;
-
-            // console.log(res.data.access_token);
-            // console.log("Encoded JWT ID token: " + response.credential);
+            if (res) {
+                localStorage.access_token = res.data.access_token;
+                navigate('/');
+            } else {
+                navigate('/login');
+            }
         } catch (error) {
             console.log(error);
         };

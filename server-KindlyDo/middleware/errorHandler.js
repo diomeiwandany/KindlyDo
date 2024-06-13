@@ -25,7 +25,11 @@ function errorHandler(err, req, res, next) {
                 message: "Task not found",
             });
 
-        // ERROR CODE 500 (INTERNAL SERVER ERROR )
+        // ERROR CODE 500 (INTERNAL SERVER ERROR)
+        case "SequelizeConnectionRefusedError":
+            return res.status(500).json({
+                message: "Internal Server Error",
+            })
         default:
             return res.status(500).json({
                 message: "Internal Server Error",

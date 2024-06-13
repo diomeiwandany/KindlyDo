@@ -42,9 +42,28 @@ class Controller {
 
     static async taskList(req, res, next) {
         try {
-            const data = await Task.findAll();
+            // console.log(req.user);
+            const { id } = req.user;
+            const data = await Task.findAll({
+                where: {
+                    assigneeId: id,
+                },
+                include: [
+                    {
+                        model: User,
+                        as: 'assigner',
+                        attributes: ['name']
+                    },
+                    {
+                        model: User,
+                        as: 'assignee',
+                        attributes: ['name']
+                    }
+                ]
+            });
             return res.status(200).json(data);
         } catch (error) {
+            console.log(error);
             next(error);
         };
     };
