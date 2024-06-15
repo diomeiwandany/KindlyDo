@@ -4,11 +4,6 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
       User.hasMany(models.Task, { foreignKey: 'assigneeId' });
       User.hasOne(models.Task, { foreignKey: 'assignerId' });
@@ -47,22 +42,6 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
     },
-    // password: {
-    //   type: DataTypes.STRING,
-    //   allowNull: false,
-    //   validate: {
-    //     notNull: {
-    //       msg: "Field password must be filled (Null)"
-    //     },
-    //     notEmpty: {
-    //       msg: "Field password must be filled (Empty)"
-    //     },
-    //     len: {
-    //       args: [5, 255],
-    //       msg: "Minimum length of password: 5 Character",
-    //     },
-    //   },
-    // },
     proUser: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
@@ -79,11 +58,6 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'User',
-    // hooks: {
-    //   beforeCreate(user) {
-    //     user.password = hashPassword(user.password);
-    //   },
-    // },
   });
   return User;
 };

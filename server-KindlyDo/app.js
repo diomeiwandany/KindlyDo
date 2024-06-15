@@ -20,6 +20,8 @@ app.post('/login', Controller.loginByGoogle);
 app.use(authentication);
 // AUTHENTICATION PAGES
 app.get('/', Controller.taskList);
+app.get('/task/all', Controller.taskListAll);
+app.get('/task/other', Controller.taskListOther);
 app.post('/task/', Controller.taskAdd);
 app.get('/task/:id', Controller.taskById);
 app.put('/task/:id', Controller.taskUpdate);

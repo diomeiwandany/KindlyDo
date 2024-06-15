@@ -1,5 +1,5 @@
-const { where } = require('sequelize');
-const { Task, User } = require('../models');
+const { Op } = require('sequelize');
+const { Task, User, sequelize } = require('../models');
 const { OAuth2Client } = require('google-auth-library');
 const { signToken } = require('../helpers/jwt');
 const client = new OAuth2Client();
@@ -52,15 +52,71 @@ class Controller {
                     {
                         model: User,
                         as: 'assigner',
-                        attributes: ['name']
+                        attributes: ['id', 'name']
                     },
                     {
                         model: User,
                         as: 'assignee',
-                        attributes: ['name']
+                        attributes: ['id', 'name']
                     }
                 ]
             });
+            return res.status(200).json(data);
+        } catch (error) {
+            console.log(error);
+            next(error);
+        };
+    };
+
+    static async taskListAll(req, res, next) {
+        try {
+            // console.log(req.user);
+            const data = await Task.findAll({
+                include: [
+                    {
+                        model: User,
+                        as: 'assigner',
+                        attributes: ['id', 'name']
+                    },
+                    {
+                        model: User,
+                        as: 'assignee',
+                        attributes: ['id', 'name']
+                    }
+                ]
+            });
+            // console.log(data);
+            return res.status(200).json(data);
+        } catch (error) {
+            console.log(error);
+            next(error);
+        };
+    };
+
+    static async taskListOther(req, res, next) {
+        try {
+            const { id } = req.user;
+            // console.log(req.user);
+            const data = await Task.findAll({
+                where: {
+                    [Op.not]: [
+                        { assigneeId: id }
+                    ]
+                },
+                include: [
+                    {
+                        model: User,
+                        as: 'assigner',
+                        attributes: ['id', 'name']
+                    },
+                    {
+                        model: User,
+                        as: 'assignee',
+                        attributes: ['id', 'name']
+                    }
+                ]
+            });
+            // console.log(data);
             return res.status(200).json(data);
         } catch (error) {
             console.log(error);

@@ -19,6 +19,11 @@ function errorHandler(err, req, res, next) {
                 message: `Only task status Done can be deleted`,
             });
 
+        case "Forbidden":
+            return res.status(403).json({
+                message: `Forbidden`
+            });
+
         // ERROR CODE 404 (NOT FOUND)
         case "NotFound":
             return res.status(404).json({
