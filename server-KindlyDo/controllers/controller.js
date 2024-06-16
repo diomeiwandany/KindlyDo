@@ -1,5 +1,5 @@
 const { Op } = require('sequelize');
-const { Task, User, sequelize } = require('../models');
+const { Task, User } = require('../models');
 const { OAuth2Client } = require('google-auth-library');
 const { signToken } = require('../helpers/jwt');
 const client = new OAuth2Client();
@@ -145,6 +145,7 @@ class Controller {
                 message: `Task ${data.name} has been created`,
             });
         } catch (error) {
+            console.log(error);
             next(error);
         };
     };
@@ -208,6 +209,19 @@ class Controller {
                 message: `Task with id ${data.id} - ${data.name} has been deleted`,
             });
         } catch (error) {
+            next(error);
+        }
+    };
+
+    static async userList(req, res, next) {
+        try {
+            const data = await User.findAll({
+                attributes: ['id', 'name', 'email']
+            });
+
+            return res.status(200).json(data);
+        } catch (error) {
+            console.log(error);
             next(error);
         }
     }

@@ -1,8 +1,9 @@
 import { RouterProvider, createBrowserRouter, redirect } from "react-router-dom"
-import { Login } from "./pages/Login"
-import { MyTask } from "./pages/MyTask"
-import { AllTask } from "./pages/AllTask";
-import { OtherTask } from "./pages/OtherTask";
+import Login from "./pages/Login"
+import MyTask from "./pages/MyTask"
+import AllTask from "./pages/AllTask";
+import OtherTask from "./pages/OtherTask";
+import AddTask from "./pages/AddTask";
 
 const router = createBrowserRouter([
   {
@@ -11,6 +12,16 @@ const router = createBrowserRouter([
   },
   {
     path: "/",
+    loader: () => {
+      if (!localStorage.access_token) {
+        return redirect('/login');
+      } else {
+        return redirect('/task/my');
+      }
+    }
+  },
+  {
+    path: "/task/my",
     element: <MyTask />,
     loader: () => {
       if (!localStorage.access_token) {
@@ -39,9 +50,17 @@ const router = createBrowserRouter([
       return null;
     }
   },
+  {
+    path: "/task/add",
+    element: <AddTask />,
+    loader: () => {
+      if (!localStorage.access_token) {
+        return redirect('/login');
+      }
+      return null;
+    }
+  },
 ])
-
-// /task/other
 
 function App() {
   return (

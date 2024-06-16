@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom"
 
-export function Login() {
+export default function Login() {
     const navigate = useNavigate();
 
     const handleLogin = () => {
@@ -15,7 +15,7 @@ export function Login() {
         try {
             const res = await axios({
                 method: 'POST',
-                url: 'http://localhost:3000/login',
+                url: import.meta.env.VITE_SERVER_URL + "/login",
                 headers: {
                     google_token: response.credential,
                 },

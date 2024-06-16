@@ -19,6 +19,7 @@ app.post('/login', Controller.loginByGoogle);
 
 app.use(authentication);
 // AUTHENTICATION PAGES
+app.get('/users', Controller.userList);
 app.get('/', Controller.taskList);
 app.get('/task/all', Controller.taskListAll);
 app.get('/task/other', Controller.taskListOther);
