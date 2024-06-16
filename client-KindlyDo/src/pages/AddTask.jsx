@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import KindlyIcon from "../components/KindlyIcon";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import api from "../../helpers/api";
 import Swal from "sweetalert2";
 
@@ -8,16 +8,13 @@ export default function AddTask() {
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     // const [assignerId, setAssignerId] = useState("");
-    const [assigneeId, setAssigneeId] = useState([]);
+    const [assigneeId, setAssigneeId] = useState("");
+    const [users, setUsers] = useState([]);
     // const [status, setStatus] = useState("");
 
     console.log({ name, description, assigneeId });
 
     const navigate = useNavigate();
-
-    const handleAssignee = (e) => {
-        setAssigneeId(e.target.value);
-    }
 
     useEffect(() => {
         async function fetchData() {
@@ -28,7 +25,7 @@ export default function AddTask() {
                     }
                 });
                 console.log(response.data);
-                setAssigneeId(response.data);
+                setUsers(response.data);
             } catch (error) {
                 if (error.response) {
                     Swal.fire({
@@ -46,8 +43,9 @@ export default function AddTask() {
             }
         }
         fetchData();
-        console.log()
     }, []);
+
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -134,10 +132,10 @@ export default function AddTask() {
                                             </label>
 
 
-                                            <select id="taskAssignee" className="form-select" required="">
-                                                {assigneeId.map((assigned) => {
+                                            <select id="taskAssignee" className="form-select" required="" onChange={(e) => setAssigneeId(e.target.value)}>
+                                                {users.map((user) => {
                                                     return (
-                                                        <option onChange={(e) => setAssigneeId(e.target.value)} key={assigned.id} value={assigned.id}>{assigned.name} - {assigned.email} - {assigned.id}</option>
+                                                        <option onChange={(e) => setAssigneeId(e.target.value)} key={user.id} value={user.id}>{user.name} - {user.email} - {user.id}</option>
                                                     )
                                                 })}
                                             </select>
@@ -145,9 +143,12 @@ export default function AddTask() {
 
                                         </div>
 
-                                        <button type="submit" className="btn btn-primary">
-                                            Submit
-                                        </button>
+                                        <div className="row gap-3 p-2 g-col-6">
+                                            <Link to={-1} className="col btn btn-danger">Cancel</Link>
+                                            <button type="submit" className="col btn btn-primary">
+                                                Submit
+                                            </button>
+                                        </div>
                                     </form>
 
                                 </div>
