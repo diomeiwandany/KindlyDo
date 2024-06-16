@@ -8,6 +8,7 @@ const express = require('express');
 const Controller = require('./controllers/controller');
 const errorHandler = require('./middleware/errorHandler');
 const authentication = require('./middleware/authentication');
+const authorizationTask = require('./middleware/authorization');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -25,7 +26,7 @@ app.get('/task/all', Controller.taskListAll);
 app.get('/task/other', Controller.taskListOther);
 app.post('/task/', Controller.taskAdd);
 app.get('/task/:id', Controller.taskById);
-app.put('/task/:id', Controller.taskUpdate);
+app.put('/task/:id', authorizationTask, Controller.taskUpdate);
 app.delete('/task/:id', Controller.taskDelete);
 
 app.use(errorHandler);

@@ -1,29 +1,35 @@
 import { useEffect, useState } from "react";
 import KindlyIcon from "../components/KindlyIcon";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import api from "../../helpers/api";
 import Swal from "sweetalert2";
 
-export default function AddTask() {
+export default function UpdateTask() {
+    const { id } = useParams();
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
+    const [assignerId, setAssignerId] = useState("");
     const [assigneeId, setAssigneeId] = useState("");
-    const [users, setUsers] = useState([]);
+    const [status, setStatus] = useState("");
 
-    console.log({ name, description, assigneeId });
+    console.log({ name, description, assignerId, assigneeId, status });
 
     const navigate = useNavigate();
 
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await api.get('/users', {
+                const response = await api.get(`/task/${id}`, {
                     headers: {
                         Authorization: `Bearer ${localStorage.access_token}`,
                     }
                 });
                 console.log(response.data);
-                setUsers(response.data);
+                setName(response.data.name);
+                setDescription(response.data.description);
+                setAssignerId(response.data.assignerId);
+                setAssigneeId(response.data.assigneeId);
+                setStatus(response.data.status);
             } catch (error) {
                 if (error.response) {
                     Swal.fire({
@@ -49,15 +55,12 @@ export default function AddTask() {
         e.preventDefault();
 
         try {
-            const payload = JSON.parse(atob(localStorage.access_token.split('.')[1]));
-            const { id } = payload;
-            // console.log(payload);
-            const response = await api.post("/task", {
+            const response = await api.put(`/task/${id}`, {
                 name,
                 description,
-                assignerId: id,
+                assignerId,
                 assigneeId,
-                status: "On progress",
+                status: status,
             }, {
                 headers: {
                     Authorization: `Bearer ${localStorage.access_token}`,
@@ -91,7 +94,7 @@ export default function AddTask() {
                             <div className="card-body p-4 text-black">
                                 <div className="text-center pt-3 pb-2">
                                     <KindlyIcon />
-                                    <h2 className="my-4">Add Task</h2>
+                                    <h2 className="my-4">Update Task</h2>
                                 </div>
                                 <div className="text-center pt-3 pb-2">
                                     <form onSubmit={handleSubmit}>
@@ -125,20 +128,13 @@ export default function AddTask() {
                                         </div>
 
                                         <div className="mb-3">
-                                            <label htmlFor="taskAssignee" className="form-label">
-                                                Assign To
+                                            <label htmlFor="taskStatus" className="form-label">
+                                                Status
                                             </label>
-
-
-                                            <select id="taskAssignee" className="form-select" required="" onChange={(e) => setAssigneeId(e.target.value)}>
-                                                {users.map((user) => {
-                                                    return (
-                                                        <option onChange={(e) => setAssigneeId(e.target.value)} key={user.id} value={user.id}>{user.name} - {user.email} - {user.id}</option>
-                                                    )
-                                                })}
+                                            <select className="form-select" onChange={(e) => setStatus(e.target.value)}>
+                                                <option value="On progress">On progress</option>
+                                                <option value="Done">Done</option>
                                             </select>
-
-
                                         </div>
 
                                         <div className="row gap-3 p-2 g-col-6">

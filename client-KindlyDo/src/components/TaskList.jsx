@@ -4,7 +4,7 @@ import KindlyIcon from "./KindlyIcon"
 
 export default function TaskList(props) {
     const { tasks } = props;
-    // console.log(props);
+    console.log(props);
 
     return (
         <section className="vh-100 gradient-custom-2">
@@ -28,6 +28,7 @@ export default function TaskList(props) {
                                             <th scope="col">Status</th>
                                             <th scope="col">Created At</th>
                                             <th scope="col">Updated At</th>
+                                            {window.location.pathname === "/task/my" ? <th scope="col">Action</th> : null}
                                         </tr>
                                     </thead>
                                     <tbody>
