@@ -48,6 +48,9 @@ class Controller {
                 where: {
                     assigneeId: id,
                 },
+                order: [
+                    ['id', 'DESC']
+                ],
                 include: [
                     {
                         model: User,
@@ -72,6 +75,9 @@ class Controller {
         try {
             // console.log(req.user);
             const data = await Task.findAll({
+                order: [
+                    ['id', 'DESC']
+                ],
                 include: [
                     {
                         model: User,
@@ -98,6 +104,9 @@ class Controller {
             const { id } = req.user;
             // console.log(req.user);
             const data = await Task.findAll({
+                order: [
+                    ['id', 'DESC']
+                ],
                 where: {
                     [Op.not]: [
                         { assigneeId: id }
@@ -216,7 +225,11 @@ class Controller {
     static async userList(req, res, next) {
         try {
             const data = await User.findAll({
-                attributes: ['id', 'name', 'email']
+                order: [
+                    ['id', 'ASC']
+                ],
+                attributes:
+                    ['id', 'name', 'email']
             });
 
             return res.status(200).json(data);

@@ -4,7 +4,7 @@ import KindlyIcon from "./KindlyIcon"
 
 export default function TaskList(props) {
     const { tasks } = props;
-    console.log(props);
+    // console.log(props);
 
     return (
         <section className="vh-100 gradient-custom-2">

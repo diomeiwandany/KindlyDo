@@ -131,7 +131,7 @@ export default function UpdateTask() {
                                             <label htmlFor="taskStatus" className="form-label">
                                                 Status
                                             </label>
-                                            <select className="form-select" onChange={(e) => setStatus(e.target.value)}>
+                                            <select className="form-select" defaultValue={status} onChange={(e) => setStatus(e.target.value)}>
                                                 <option value="On progress">On progress</option>
                                                 <option value="Done">Done</option>
                                             </select>
