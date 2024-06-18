@@ -27,7 +27,7 @@ app.get('/task/other', Controller.taskListOther);
 app.post('/task/', Controller.taskAdd);
 app.get('/task/:id', Controller.taskById);
 app.put('/task/:id', authorizationTask, Controller.taskUpdate);
-app.delete('/task/:id', Controller.taskDelete);
+app.delete('/task/:id', authorizationTask, Controller.taskDelete);
 
 app.use(errorHandler);
 
