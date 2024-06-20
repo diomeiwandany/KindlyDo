@@ -5,6 +5,8 @@ import AllTask from "./pages/AllTask";
 import OtherTask from "./pages/OtherTask";
 import AddTask from "./pages/AddTask";
 import UpdateTask from "./pages/UpdateTask";
+import ProUser from "./pages/ProUser";
+import AITask from "./pages/AITask";
 
 const router = createBrowserRouter([
   {
@@ -64,6 +66,26 @@ const router = createBrowserRouter([
   {
     path: "/task/:id",
     element: <UpdateTask />,
+    loader: () => {
+      if (!localStorage.access_token) {
+        return redirect('/login');
+      }
+      return null;
+    }
+  },
+  {
+    path: `/pro/:id`,
+    element: <ProUser />,
+    loader: () => {
+      if (!localStorage.access_token) {
+        return redirect('/login');
+      }
+      return null;
+    }
+  },
+  {
+    path: `/task/ai`,
+    element: <AITask />,
     loader: () => {
       if (!localStorage.access_token) {
         return redirect('/login');
