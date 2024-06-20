@@ -12,7 +12,7 @@ export default function UpdateTask() {
     const [assigneeId, setAssigneeId] = useState("");
     const [status, setStatus] = useState("");
 
-    console.log({ name, description, assignerId, assigneeId, status });
+    // console.log({ name, description, assignerId, assigneeId, status });
 
     const navigate = useNavigate();
 
@@ -24,7 +24,7 @@ export default function UpdateTask() {
                         Authorization: `Bearer ${localStorage.access_token}`,
                     }
                 });
-                console.log(response.data);
+                // console.log(response.data);
                 setName(response.data.name);
                 setDescription(response.data.description);
                 setAssignerId(response.data.assignerId);
@@ -66,7 +66,7 @@ export default function UpdateTask() {
                     Authorization: `Bearer ${localStorage.access_token}`,
                 }
             });
-            console.log(response);
+            // console.log(response);
             navigate('/');
         } catch (error) {
             if (error.response) {

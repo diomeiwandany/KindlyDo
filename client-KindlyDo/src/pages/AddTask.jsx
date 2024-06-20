@@ -10,7 +10,7 @@ export default function AddTask() {
     const [assigneeId, setAssigneeId] = useState("");
     const [users, setUsers] = useState([]);
 
-    console.log({ name, description, assigneeId });
+    // console.log({ name, description, assigneeId });
 
     const navigate = useNavigate();
 
@@ -22,7 +22,7 @@ export default function AddTask() {
                         Authorization: `Bearer ${localStorage.access_token}`,
                     }
                 });
-                console.log(response.data);
+                // console.log(response.data);
                 setUsers(response.data);
             } catch (error) {
                 if (error.response) {
@@ -63,7 +63,7 @@ export default function AddTask() {
                     Authorization: `Bearer ${localStorage.access_token}`,
                 }
             });
-            console.log(response);
+            // console.log(response);
             navigate('/');
         } catch (error) {
             if (error.response) {

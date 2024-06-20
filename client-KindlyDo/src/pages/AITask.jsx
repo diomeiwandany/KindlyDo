@@ -9,7 +9,7 @@ export default function AITask() {
     const [command, setCommand] = useState("");
     const [result, setResult] = useState("");
 
-    console.log({ command });
+    // console.log({ command });
 
     useEffect(() => {
         async function fetchData() {
@@ -56,7 +56,7 @@ export default function AITask() {
                     Authorization: `Bearer ${localStorage.access_token}`,
                 }
             });
-            console.log(response);
+            // console.log(response);
             setResult(response.data);
         } catch (error) {
             if (error.response) {
