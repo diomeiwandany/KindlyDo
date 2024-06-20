@@ -21,7 +21,7 @@ export default function Panel() {
                 // console.log(response.data);
                 setUser(response.data);
             } catch (error) {
-                console.log(error);
+                // console.log(error);
                 if (error.response) {
                     Swal.fire({
                         title: "Error!",

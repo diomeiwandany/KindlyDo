@@ -17,7 +17,7 @@ export default function MyTask() {
                 // console.log(response);
                 setTasks(response.data);
             } catch (error) {
-                console.log(error);
+                // console.log(error);
                 if (error.response) {
                     Swal.fire({
                         title: "Error!",
