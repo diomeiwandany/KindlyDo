@@ -1,5 +1,8 @@
 # KindlyDo Server API Documentation
 
+Public Link: https://kindlydo.dhyonz.com
+API Link: https://ip-p2.dhyonz.com
+
 &nbsp;
 
 ## Models :
