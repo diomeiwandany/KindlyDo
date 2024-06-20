@@ -1,35 +1,28 @@
 import { useEffect, useState } from "react";
 import KindlyIcon from "../components/KindlyIcon";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import api from "../../helpers/api";
 import Swal from "sweetalert2";
 
-export default function UpdateTask() {
-    const { id } = useParams();
-    const [name, setName] = useState("");
-    const [description, setDescription] = useState("");
-    const [assignerId, setAssignerId] = useState("");
-    const [assigneeId, setAssigneeId] = useState("");
-    const [status, setStatus] = useState("");
+export default function AITask() {
+    const [tasks, setTasks] = useState([]);
+    const [command, setCommand] = useState("");
+    const [result, setResult] = useState("");
 
-    console.log({ name, description, assignerId, assigneeId, status });
-
-    const navigate = useNavigate();
+    console.log({ command });
 
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await api.get(`/task/${id}`, {
+                // const response = await api.get('/', {
+                const response = await api.get('/task/all', {
+                    // /task/all
                     headers: {
                         Authorization: `Bearer ${localStorage.access_token}`,
                     }
                 });
-                console.log(response.data);
-                setName(response.data.name);
-                setDescription(response.data.description);
-                setAssignerId(response.data.assignerId);
-                setAssigneeId(response.data.assigneeId);
-                setStatus(response.data.status);
+                // console.log(response.data);
+                setTasks(response.data);
             } catch (error) {
                 if (error.response) {
                     Swal.fire({
@@ -55,19 +48,16 @@ export default function UpdateTask() {
         e.preventDefault();
 
         try {
-            const response = await api.put(`/task/${id}`, {
-                name,
-                description,
-                assignerId,
-                assigneeId,
-                status: status,
+            const response = await api.post('/task/ai', {
+                taskList: tasks,
+                command: command
             }, {
                 headers: {
                     Authorization: `Bearer ${localStorage.access_token}`,
                 }
             });
             console.log(response);
-            navigate('/');
+            setResult(response.data);
         } catch (error) {
             if (error.response) {
                 Swal.fire({
@@ -94,49 +84,23 @@ export default function UpdateTask() {
                             <div className="card-body p-4 text-black">
                                 <div className="text-center pt-3 pb-2">
                                     <KindlyIcon />
-                                    <h2 className="my-4">Update Task</h2>
+                                    <h2 className="my-4">OpenAI Support</h2>
                                 </div>
                                 <div className="text-center pt-3 pb-2">
                                     <form onSubmit={handleSubmit}>
                                         <div className="mb-3">
                                             <label htmlFor="taskName" className="form-label">
-                                                Task Name
+                                                Input Command
                                             </label>
                                             <input
                                                 type="text"
                                                 className="form-control"
                                                 id="taskName"
-                                                placeholder="Enter Task Name"
+                                                placeholder="Enter your command"
                                                 required=""
-                                                value={name}
-                                                onChange={(e) => setName(e.target.value)}
+                                                value={command}
+                                                onChange={(e) => setCommand(e.target.value)}
                                             />
-                                        </div>
-                                        <div className="mb-3">
-                                            <label htmlFor="taskDescription" className="form-label">
-                                                Description
-                                            </label>
-                                            <input
-                                                type="text"
-                                                className="form-control"
-                                                id="taskDescription"
-                                                placeholder="Enter Task Description"
-                                                required=""
-                                                value={description}
-                                                onChange={(e) => setDescription(e.target.value)}
-                                            />
-                                        </div>
-
-                                        <div className="mb-3">
-                                            <label htmlFor="taskStatus" className="form-label">
-                                                Status
-                                            </label>
-                                            <select className="form-select"
-                                                value={status}
-                                                onChange={(e) => setStatus(e.target.value)}>
-                                                <option value="Done">Done</option>
-                                                <option value="On progress">On progress</option>
-                                            </select>
                                         </div>
 
                                         <div className="row gap-3 p-2 g-col-6">
@@ -146,6 +110,15 @@ export default function UpdateTask() {
                                             </button>
                                         </div>
                                     </form>
+                                    <div className="text-center pt-3 pb-2">
+                                        <div>
+                                            Comand: <br></br> {command}
+                                        </div>
+                                        <br></br>
+                                        <div>
+                                            Result: <br></br> {result}
+                                        </div>
+                                    </div>
 
                                 </div>
                             </div>

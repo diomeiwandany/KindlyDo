@@ -2,6 +2,7 @@ const { Op } = require('sequelize');
 const { Task, User } = require('../models');
 const { OAuth2Client } = require('google-auth-library');
 const { signToken } = require('../helpers/jwt');
+const openAI = require('../helpers/openai');
 const client = new OAuth2Client();
 
 class Controller {
@@ -252,6 +253,19 @@ class Controller {
             next(error);
         }
     }
+
+    static async openai(req, res, next) {
+        try {
+            // console.log(req.body.question);
+            const { taskList, command } = req.body;
+            let response = await openAI(taskList, command);
+            console.log(response);
+            res.send(response);
+        } catch (error) {
+            console.log(error);
+            next(error);
+        }
+    };
 
 };
 

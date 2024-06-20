@@ -20,9 +20,16 @@ app.post('/login', Controller.loginByGoogle);
 
 app.use(authentication);
 // AUTHENTICATION PAGES
+
+// Users
 app.get('/users', Controller.userList);
 app.get('/users/:id', Controller.userById);
+
+
+// Task
 app.get('/', Controller.taskList);
+// OpenAI
+app.post('/task/ai', Controller.openai);
 app.get('/task/all', Controller.taskListAll);
 app.get('/task/other', Controller.taskListOther);
 app.post('/task/', Controller.taskAdd);

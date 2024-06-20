@@ -12,6 +12,7 @@ export default function Panel() {
                 const payload = JSON.parse(atob(localStorage.access_token.split('.')[1]));
                 const { id } = payload;
                 // console.log(id);
+                // console.log(payload.iat);
                 const response = await api.get(`/users/${id}`, {
                     headers: {
                         Authorization: `Bearer ${localStorage.access_token}`,
@@ -58,11 +59,11 @@ export default function Panel() {
             </div>
             {!user.proUser ?
                 <div className="row grid gap-3 p-2 g-col-6">
-                    <Link className="col btn btn-dark" to={'/task/add'}>Need AI Assistant? Become PRO USER! ✊🏻</Link>
+                    <Link className="col btn btn-dark" to={`/pro/${user.id}`}>Need AI Assistant? Become PRO USER! ✊🏻</Link>
                 </div>
                 :
                 <div className="row grid gap-3 p-2 g-col-6">
-                    <Link className="col btn btn-info" to={'/task/add'}>Click me for AI Assistant 😎</Link>
+                    <Link className="col btn btn-info" to={'/task/ai'}>Click me for AI Assistant 😎</Link>
                 </div>
             }
         </>
