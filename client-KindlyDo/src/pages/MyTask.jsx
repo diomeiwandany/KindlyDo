@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 import api from "../../helpers/api";
 import TaskList from "../components/TaskList";
 import Swal from "sweetalert2";

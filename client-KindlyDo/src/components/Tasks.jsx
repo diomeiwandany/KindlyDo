@@ -1,7 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import api from "../../helpers/api";
-import { useState } from "react";
 
 export default function Tasks(props) {
     const { task } = props;
@@ -56,11 +55,13 @@ export default function Tasks(props) {
                 {task.updatedAt.split("T")[0]}
             </td>
             {window.location.pathname === "/task/my" ?
-                <td className="row align-middle mt-4">
+                <td className="row align-middle mt-4 justify-content-center">
                     <Link to={`/task/${task.id}`} className="col btn btn-success">Update</Link>
                     <button onClick={handleDelete} className="col btn btn-danger">Delete</button>
                     {/* <DeleteButton task={task} /> */}
-                </td> : null}
+                </td>
+                :
+                null}
         </tr>
     )
 };

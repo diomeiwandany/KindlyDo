@@ -1,6 +1,6 @@
-import Tasks from "./Tasks"
-import Panel from "./Panel"
-import KindlyIcon from "./KindlyIcon"
+import Tasks from "./Tasks";
+import Panel from "./Panel";
+import KindlyIcon from "./KindlyIcon";
 
 export default function TaskList(props) {
     const { tasks } = props;

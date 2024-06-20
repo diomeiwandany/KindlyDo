@@ -239,6 +239,20 @@ class Controller {
         }
     }
 
+    static async userById(req, res, next) {
+        try {
+            const { id } = req.params;
+            const data = await User.findByPk(id);
+            if (!data) {
+                throw { name: `UserNotFound` }
+            }
+            res.status(200).json(data);
+        } catch (error) {
+            console.log(error);
+            next(error);
+        }
+    }
+
 };
 
 module.exports = Controller;

@@ -30,6 +30,11 @@ function errorHandler(err, req, res, next) {
                 message: "Task not found",
             });
 
+        case "UserNotFound":
+            return res.status(404).json({
+                message: "User not found",
+            });
+
         // ERROR CODE 500 (INTERNAL SERVER ERROR)
         case "SequelizeConnectionRefusedError":
             return res.status(500).json({
