@@ -1,0 +1,14 @@
+[
+    {
+        "id": 1,
+        "name": "Dio Meiwandany",
+        "email": "diomeiwandany@gmail.com",
+        "proUser": true
+    },
+    {
+        "id": 2,
+        "name": "Dio Meiwandany",
+        "email": "d.meiwandany@gmail.com",
+        "proUser": false
+    }
+]
